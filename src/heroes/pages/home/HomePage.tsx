@@ -15,6 +15,8 @@ export const HomePage = () => {
 
   // const [activeTab, setActiveTab] = useState<'all'|  'favorites'|  'heroes'|  'villains'>('all');
   const activeTab = searchParams.get('tab') ?? 'all'; 
+  const page = searchParams.get('page') ?? '1'; 
+  const limit = searchParams.get('limit') ?? '6';
 
   const selectedTab = useMemo(() => {
     const validTabs = ['all', 'favorites', 'heroes', 'villains']
@@ -26,8 +28,8 @@ export const HomePage = () => {
   //   })
   // }, []);
   const { data: heroesResponse } = useQuery({
-    queryKey: ['heroes'],
-    queryFn: () => getHeroesByPageAction(),
+    queryKey: ['heroes', {page, limit}],
+    queryFn: () => getHeroesByPageAction(Number(page), +limit),
     staleTime: 1000 * 60 * 5, // 5 minutes
   });
   // console.log(heroesResponse)
@@ -106,7 +108,7 @@ export const HomePage = () => {
         </Tabs>
 
         {/* Pagination */}
-        <CustomPagination totalPages={8}></CustomPagination>
+        <CustomPagination totalPages={heroesResponse?.pages ?? 1}></CustomPagination>
       </>
     </>
   )
