@@ -1,50 +1,59 @@
 import { Badge } from "@/components/ui/badge"
 import { Heart, Trophy, Users, Zap } from "lucide-react"
 import { HeroStatsCard } from "./HeroStatsCard"
+import { useHeroSummary } from "../hooks/useHeroSummary";
 
 export const HeroStats = () => {
-  return (
-    <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
 
-        <HeroStatsCard 
-            title="Total Characters"
-            icon={<Users className="h-4 w-4 text-muted-foreground" />}
-        >
-            <div className="text-2xl font-bold">16</div>
-            <div className="flex gap-1 mt-2">
-                <Badge variant="secondary" className="text-xs">
-                    12 Heroes
-                </Badge>
-                <Badge variant="destructive" className="text-xs">
-                    2 Villains
-                </Badge>
-            </div>  
-        </HeroStatsCard>
+    // const { data: summary } = useQuery({
+    //     queryKey: ['summary-information'],
+    //     queryFn: () => getSummaryAction(),
+    //     staleTime: 1000 * 60 * 5,
+    // });
+    const { data: summary } = useHeroSummary();
 
-        <HeroStatsCard 
-            title="Favorites"
-            icon={<Heart className="h-4 w-4 text-muted-foreground" />}
-        >
-            <div className="text-2xl font-bold text-red-600">3</div>
-            <p className="text-xs text-muted-foreground">18.8% of total</p>    
-        </HeroStatsCard>
+    return (
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
 
-        <HeroStatsCard 
-            title="Strongest"
-            icon={<Zap className="h-4 w-4 text-muted-foreground" />}
-        >
-            <div className="text-lg font-bold">Superman</div>
-            <p className="text-xs text-muted-foreground">Strength: 10/10</p>  
-        </HeroStatsCard>
+            <HeroStatsCard 
+                title="Total Characters"
+                icon={<Users className="h-4 w-4 text-muted-foreground" />}
+            >
+                <div className="text-2xl font-bold">{summary?.totalHeroes}</div>
+                <div className="flex gap-1 mt-2">
+                    <Badge variant="secondary" className="text-xs">
+                        {summary?.totalHeroes} Heroes
+                    </Badge>
+                    <Badge variant="destructive" className="text-xs">
+                        {summary?.villainCount} Villains
+                    </Badge>
+                </div>  
+            </HeroStatsCard>
+            {/* TODO: Calculate this value */}
+            <HeroStatsCard 
+                title="Favorites"
+                icon={<Heart className="h-4 w-4 text-muted-foreground" />}
+            >
+                <div className="text-2xl font-bold text-red-600">3</div>
+                <p className="text-xs text-muted-foreground">18.8% of total</p>    
+            </HeroStatsCard>
 
-        <HeroStatsCard 
-            title="Smartest"
-            icon={<Trophy className="h-4 w-4 text-muted-foreground" />}
-        >
-            <div className="text-lg font-bold">Batman</div>
-            <p className="text-xs text-muted-foreground">Intelligence: 10/10</p>
-        </HeroStatsCard>
-        
-    </div>
-  )
+            <HeroStatsCard 
+                title="Strongest"
+                icon={<Zap className="h-4 w-4 text-muted-foreground" />}
+            >
+                <div className="text-lg font-bold">{summary?.strongestHero?.alias}</div>
+                <p className="text-xs text-muted-foreground">Strength: {summary?.strongestHero?.strength}/10</p>  
+            </HeroStatsCard>
+
+            <HeroStatsCard 
+                title="Smartest"
+                icon={<Trophy className="h-4 w-4 text-muted-foreground" />}
+            >
+                <div className="text-lg font-bold">{summary?.smartestHero?.alias}</div>
+                <p className="text-xs text-muted-foreground">Intelligence: {summary?.smartestHero?.intelligence}/10</p>
+            </HeroStatsCard>
+            
+        </div>
+    )
 }
