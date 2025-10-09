@@ -73,7 +73,7 @@ export const HomePage = () => {
                 }
               )
             }>
-              All Characters ({summary?.totalHeroes})</TabsTrigger>
+              All ({summary?.totalHeroes})</TabsTrigger>
             <TabsTrigger 
               value="favorites" 
               onClick={
