@@ -10,7 +10,8 @@ import { searchHeroesAction } from "@/heroes/actions/search-heroes.action";
 export const SearchPage = () => {
 
   // TODO: useQuery
-  const [searchParams, setSearchParams] = useSearchParams();
+  // const [searchParams, setSearchParams] = useSearchParams();
+  const [searchParams] = useSearchParams();
   const name = searchParams.get('name') ?? '';
   const strength = searchParams.get('strength') ?? '';
 

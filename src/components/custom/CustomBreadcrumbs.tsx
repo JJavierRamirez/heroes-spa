@@ -19,7 +19,7 @@ interface Props {
     breadcrumbs?: Breadcrumb[];
 }
 
-export const CustomBreadcrumbs = ({ currentPage, breadcrumbs = [] }: Props) => {
+export const CustomBreadcrumbs = ({ breadcrumbs = [] }: Props) => {
 
     return (
         <>
